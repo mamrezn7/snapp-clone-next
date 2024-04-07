@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+$font-name: "vazir";
+
+@font-face {
+  font-family: $font-name;
+  src: url("../node_modules/vazirmatn/fonts/ttf/Vazirmatn-Regular.ttf")
+      format("truetype"),
+    url("../node_modules/vazirmatn/fonts/webfonts/Vazirmatn-Regular.woff2")
+      format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: $font-name;
+  src: url("../node_modules/vazirmatn/fonts/ttf/Vazirmatn-SemiBold.ttf")
+      format("truetype"),
+    url("../node_modules/vazirmatn/fonts/webfonts/Vazirmatn-SemiBold.woff2")
+      format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: $font-name;
+  src: url("../node_modules/vazirmatn/fonts/ttf/Vazirmatn-Bold.ttf")
+      format("truetype"),
+    url("../node_modules/vazirmatn/fonts/webfonts/Vazirmatn-Bold.woff2")
+      format("woff2");
+  font-weight: 600;
+  font-style: normal;
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+* {
+  font-family: $font-name;
+}
+body {
+  color: rgb(var(--foreground-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

@@ -6,7 +6,7 @@ import Routing from "./routing";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "../../../node_modules/leaflet/dist/leaflet.css";
 import "../../../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css";
-import PrimaryButton from "../shared/button";
+import { PrimaryButton, CustomButton } from "../shared/button";
 
 function Map() {
   const map = useMap();
@@ -24,6 +24,14 @@ function Map() {
     };
   }, [map, onMove]);
 
+  const selectStartPoint = () => {
+    setWayPoints([...wayPoints, position]);
+  };
+  const selectEndPoint = () => {
+    setWayPoints([...wayPoints, position]);
+  };
+  const submitRequest = () => {};
+
   return (
     <React.Fragment>
       <TileLayer
@@ -31,10 +39,34 @@ function Map() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Routing wayPoints={wayPoints} />
-      <div className="absolute bottom-0 w-full p-8" style={{ zIndex: "1000" }}>
-        <PrimaryButton onClick={() => setWayPoints([...wayPoints, position])}>
-          ثبت درخواست
-        </PrimaryButton>
+      <div
+        className="absolute bottom-0 w-full grid bg-white rounded-xl p-6"
+        style={{ zIndex: "1000" }}
+      >
+        {wayPoints.length === 0 ? (
+          <PrimaryButton onClick={() => selectStartPoint(position)}>
+            انتخاب مبدا
+          </PrimaryButton>
+        ) : wayPoints.length === 1 ? (
+          <PrimaryButton onClick={() => selectEndPoint(position)}>
+            انتخاب مقصد
+          </PrimaryButton>
+        ) : (
+          <div className="">
+            <span className="text-black">هزینه</span>
+            <div className="flex flex-row gap-3">
+              <CustomButton
+                className="bg-rose-600 py-3 px-6 hover:bg-red-700"
+                onClick={() => setWayPoints([])}
+              >
+                لغو
+              </CustomButton>
+              <PrimaryButton onClick={() => submitRequest()}>
+                درخواست خودرو
+              </PrimaryButton>
+            </div>
+          </div>
+        )}
       </div>
     </React.Fragment>
   );

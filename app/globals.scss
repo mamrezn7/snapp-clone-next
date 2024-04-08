@@ -46,6 +46,7 @@ $font-name: "vazir";
 }
 * {
   font-family: $font-name;
+  direction: rtl;
 }
 body {
   color: rgb(var(--foreground-rgb));

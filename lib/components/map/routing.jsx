@@ -7,9 +7,11 @@ import { useMap } from "react-leaflet";
 
 L.Marker.prototype.options.icon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
+  //   iconUrl: "/images/marker.png",
+  //   shadowUrl: "../../../public/marker.png",
 });
 
-export default function Routing({ wayPoints }) {
+export default function Routing({ wayPoints, bounds }) {
   const map = useMap();
   console.log(wayPoints);
 
@@ -23,6 +25,10 @@ export default function Routing({ wayPoints }) {
 
     return () => map.removeControl(routingControl);
   }, [map, wayPoints]);
+
+  //   useEffect(() => {
+  //     L.fitBounds(bounds);
+  //   }, [bounds]);
 
   return null;
 }

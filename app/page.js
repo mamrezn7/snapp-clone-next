@@ -18,6 +18,7 @@ export default function Home() {
         zoom={13}
         scrollWheelZoom={false}
         className="w-screen h-screen z-10"
+        zoomSnap="0.25"
       >
         <Map />
       </MapContainer>

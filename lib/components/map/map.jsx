@@ -12,6 +12,7 @@ function Map() {
   const map = useMap();
   const [position, setPosition] = useState(() => map.getCenter());
   const [wayPoints, setWayPoints] = useState([]);
+  const [bounds, setBounds] = useState([]);
 
   const onMove = useCallback(() => {
     setPosition(map.getCenter());
@@ -30,23 +31,42 @@ function Map() {
   const selectEndPoint = () => {
     setWayPoints([...wayPoints, position]);
   };
-  const submitRequest = () => {};
+
+  const submitRequest = () => {
+    // map.flyToBounds(updatedArray);
+    // map.flyToBounds(wayPoints);
+    map.zoomOut();
+  };
+
+  useEffect(() => {
+    wayPoints.length === 2 ? map.flyToBounds(wayPoints) : null;
+  }, [wayPoints]);
 
   return (
     <React.Fragment>
+      {wayPoints.length < 2 && (
+        <img
+          src="/images/marker-icon.png"
+          alt=""
+          className="absolute left-1/2 top-1/2"
+          style={{ zIndex: "1000" }}
+        />
+      )}
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Routing wayPoints={wayPoints} />
+      <Routing wayPoints={wayPoints} bounds={bounds} />
       <div
         className="absolute bottom-0 w-full grid bg-white rounded-xl p-6"
         style={{ zIndex: "1000" }}
       >
         {wayPoints.length === 0 ? (
-          <PrimaryButton onClick={() => selectStartPoint(position)}>
-            انتخاب مبدا
-          </PrimaryButton>
+          <React.Fragment>
+            <PrimaryButton onClick={() => selectStartPoint(position)}>
+              انتخاب مبدا
+            </PrimaryButton>
+          </React.Fragment>
         ) : wayPoints.length === 1 ? (
           <PrimaryButton onClick={() => selectEndPoint(position)}>
             انتخاب مقصد

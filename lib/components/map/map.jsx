@@ -7,6 +7,7 @@ import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "../../../node_modules/leaflet/dist/leaflet.css";
 import "../../../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import { PrimaryButton, CustomButton } from "../shared/button";
+import CountUp from "react-countup";
 
 function Map() {
   const map = useMap();
@@ -33,13 +34,15 @@ function Map() {
   };
 
   const submitRequest = () => {
-    // map.flyToBounds(updatedArray);
-    // map.flyToBounds(wayPoints);
+    map.flyToBounds(wayPoints, { padding: [0, 250] });
+  };
+  const cancelRequest = () => {
+    setWayPoints([]);
     map.zoomOut();
   };
 
   useEffect(() => {
-    wayPoints.length === 2 ? map.flyToBounds(wayPoints) : null;
+    wayPoints.length === 2 ? submitRequest() : null;
   }, [wayPoints]);
 
   return (
@@ -73,11 +76,25 @@ function Map() {
           </PrimaryButton>
         ) : (
           <div className="">
-            <span className="text-black">هزینه</span>
+            <div className="text-stone-600 font-bold text-base flex flex-row justify-between py-4 align-middle">
+              <div>
+                <span>درخواست</span>
+                <br />
+                <span className="text-stone-400">خودرو کلاسیک</span>
+              </div>
+              <span>
+                <CountUp
+                  end={10000}
+                  duration={3}
+                  className="text-3xl text-stone-800"
+                />{" "}
+                تومان
+              </span>
+            </div>
             <div className="flex flex-row gap-3">
               <CustomButton
                 className="bg-rose-600 py-3 px-6 hover:bg-red-700"
-                onClick={() => setWayPoints([])}
+                onClick={() => cancelRequest()}
               >
                 لغو
               </CustomButton>

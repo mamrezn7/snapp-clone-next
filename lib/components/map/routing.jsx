@@ -26,9 +26,5 @@ export default function Routing({ wayPoints, bounds }) {
     return () => map.removeControl(routingControl);
   }, [map, wayPoints]);
 
-  //   useEffect(() => {
-  //     L.fitBounds(bounds);
-  //   }, [bounds]);
-
   return null;
 }
